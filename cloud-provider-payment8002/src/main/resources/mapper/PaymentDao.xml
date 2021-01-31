@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myjava.springcloud.dao.PaymentDao">
+    <sql id="sqlList">
+        id,serial
+    </sql>
+
+
+
+    <!--新增方法
+        开启主键回填-->
+    <insert id="create" parameterType="com.myjava.springcloud.entities.Payment" useGeneratedKeys="true" keyProperty="id">
+        insert into payment(serial) values (#{serial})
+    </insert>
+
+
+
+    <resultMap id="getPaymentByIdMap" type="com.myjava.springcloud.entities.Payment">
+        <id column="id" property="id"/>
+        <result column="serial" property="serial"/>
+    </resultMap>
+<!--根据id查找-->
+    <select id="getPaymentById" parameterType="long" resultMap="getPaymentByIdMap">
+        select
+         <include refid="sqlList"/>
+         from payment where id=#{id}
+    </select>
+</mapper>
